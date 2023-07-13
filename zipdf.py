@@ -12,8 +12,8 @@ def pdfmerge(paths: list, savepath: str ):
         String of the filepath where you want to save the merged PDF.
     ----------
     """
-    from PyPDF2 import PdfFileMerger
-    merger = PdfFileMerger()
+    from PyPDF2 import PdfMerger
+    merger = PdfMerger()
     for path in paths:
         merger.append(path)
     merger.write(savepath)
