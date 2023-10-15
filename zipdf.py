@@ -216,7 +216,7 @@ def zip2pdf(filepath,save_folder='',img_format='all',n=10,recursive=True,LOG=Fal
     folderpath = filepath[:-len(filepath.split(os.sep)[-1])] # folder which contains the zip file
     file = filepath.split(os.sep)[-1] # file name of the zip
     if save_folder == '':
-        save_folder = folderpath + os.sep + os.sep
+        save_folder = folderpath + os.sep
     if '.zip' in file:
         print(save_folder)
         dir = save_folder+os.sep+file[0:-len('.zip')]
@@ -277,7 +277,7 @@ def allzip2pdf(zip_folder,save_folder='',img_format='all',n=10,recursive=True,LO
     from tqdm import tqdm # progress bar
     
     files = os.listdir(zip_folder)
-    zips = [val for val in files if '.zip' in val]
+    zips = [val for val in files if ('.zip' in val) and (val[0] != '.') ]
     if LOG:
         print(str(len(zips)),'zip files are found.')
         print([val for val in files if '.zip' in val])
