@@ -289,3 +289,39 @@ def allzip2pdf(zip_folder,save_folder='',img_format='all',n=10,recursive=True,LO
         for file in pbar:
             pbar.set_description(f"Processing {file}")
             zip2pdf(zip_folder+os.sep+file,save_folder=save_folder,img_format=img_format,n=n,recursive=recursive,LOG=LOG,delete_unzipped=delete_unzipped,sortby=sortby)
+            
+            
+            
+            
+
+def getImagesFromURL(source_url:str,image_names:list[str],save_path:str,extension:str='.webp'):        
+    """Get image files 
+
+    Args:
+        source_url (str): URL of the folder where your target images are stored. Find it from Inspector tool.
+        image_names (list[str]): The list of file name of each images without extension. Usually, they are '1.webp' or something like that, so put it like ['1','2',...].
+        save_path (str): The folder path where you want to save the downloaded images.
+        extension (str, optional): The extension of the images you are going to download. Defaults to '.webp'.
+    """
+    
+    import requests
+    import os
+    # create folder if not exist
+    os.makedirs(save_path,exist_ok=True)
+    
+    for i,value in enumerate(image_names):
+        
+        # URL PATH for each image
+        if source_url[-1] != os.sep:
+            url = source_url+os.sep+str(value)+extension
+        else:
+            url = source_url+str(value)+extension
+        # Load images
+        try:
+            response = requests.get(url)
+        except requests.exceptions.RequestException as e:
+            print(url + ' not found')
+        else:
+            # Save the image
+            with open(save_path+os.sep+str(value)+ ".jpg", "wb") as f:
+                f.write(response.content)
